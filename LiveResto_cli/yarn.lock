@@ -7498,6 +7498,11 @@
   dependencies:
     "debounce" "^1.2.0"
 
+"react-native-select-dropdown@^1.0.9":
+  "integrity" "sha512-0MtM3lO6ntc8tmRs6lqT3JiPAZadecn336/3QN1DsB8FJAfpKdWiBk0a2/3gITOjUIQoQLrK+6IghHae6Ef6OA=="
+  "resolved" "https://registry.npmjs.org/react-native-select-dropdown/-/react-native-select-dropdown-1.0.9.tgz"
+  "version" "1.0.9"
+
 "react-native-size-matters@^0.3.1":
   "integrity" "sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw=="
   "resolved" "https://registry.npmjs.org/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz"

@@ -9,6 +9,7 @@ import RedComponente from './../components/RedComponent'
 import OrangeComponente from './../components/orangeComponente'
 import GreenComponente from './../components/greenComponent'
 import { styles } from './HomeScreen/styleHome'
+import SelectDropdown from 'react-native-select-dropdown'
 import {
     View,
     Text,
@@ -78,8 +79,8 @@ const HomeScreen = ({ navigation, route }) => {
 
         // const interval = setInterval(() => {
 
-           //setMergedArray([...confirm,...others])
-            console.log('.........................',mergedArray)
+        //setMergedArray([...confirm,...others])
+        console.log('.........................', mergedArray)
         // }, 5000);
 
         // return () => {
@@ -88,7 +89,7 @@ const HomeScreen = ({ navigation, route }) => {
 
     }, [count])
 
- 
+
 
 
     // Methodes
@@ -147,36 +148,28 @@ const HomeScreen = ({ navigation, route }) => {
             })
     }
 
-const getAllData = () =>{
-    Promise.all([
-        axios.get("https://dev500.live-resto.fr/apiv2e/orders"),
-        axios.get("https://dev500.live-resto.fr/apiv2e/orders"),
-      ])
-}
+    const getAllData = () => {
+        Promise.all([
+            axios.get("https://dev500.live-resto.fr/apiv2e/orders"),
+            axios.get("https://dev500.live-resto.fr/apiv2e/orders"),
+        ])
+    }
 
 
 
     const textButtonFiltre = [
-        {
-            id: 1,
-            status: 'Toute',
-            isLoading: false,
-        }, {
-            status: 'En préparation',
-            isLoading: false,
-            id: 2
 
-        }, {
-            status: 'En Cuisine',
-            isLoading: false,
-            id: 3
+        'Tout'
 
-        }, {
-            status: 'prête',
-            id: 4,
-            isLoading: false,
 
-        }
+        ,
+        'En préparation'
+        ,
+        'En Cuisine'
+
+        ,
+        'prête'
+
     ]
 
 
@@ -188,51 +181,51 @@ const getAllData = () =>{
 
 
     //const [mergedArray,setMergedArray] = useState([...confirm,...others])
- 
-   const mergedArray = [...confirm,...others]
 
-    const handlerFiltre = async (f) => {
-        // let word = f.target.value
-        console.log('handlerFiltre|||||||||||||||||||||||||||||', status)
-        if (status == 'En préparation') {
-            const data = mergedArray.filter(item => item.kitchenstate_id == '20')
+    const mergedArray = [...confirm, ...others]
 
-            //setMergedArray(data)
-            console.log('data 20',data)
+    // const handlerFiltre = async (f) => {
+    //     // let word = f.target.value
+    //     console.log('handlerFiltre|||||||||||||||||||||||||||||', status)
+    //     if (status == 'En préparation') {
+    //         const data = mergedArray.filter(item => item.kitchenstate_id == '20')
 
-
-
-
-        } else if (status == 'En Cuisine') {
-            const data = mergedArray.filter(item => item.kitchenstate_id == '30')
-
-           // setMergedArray(data)
-            console.log('data 30',data)
-
-
-        } else if (status == 'prête') {
-            const data = mergedArray.filter(item => item.kitchenstate_id == '40')
-            //setMergedArray(data)
-            console.log('data 40',data)
-
-        }
-
-        if (status == 'Toute') {
-            
-            //setMergedArray(mergedArray)
+    //         //setMergedArray(data)
+    //         console.log('data 20', data)
 
 
 
-        }
-    }
+
+    //     } else if (status == 'En Cuisine') {
+    //         const data = mergedArray.filter(item => item.kitchenstate_id == '30')
+
+    //         // setMergedArray(data)
+    //         console.log('data 30', data)
+
+
+    //     } else if (status == 'prête') {
+    //         const data = mergedArray.filter(item => item.kitchenstate_id == '40')
+    //         //setMergedArray(data)
+    //         console.log('data 40', data)
+
+    //     }
+
+    //     if (status == 'Tout') {
+
+    //         //setMergedArray(mergedArray)
+
+
+
+    //     }
+    // }
 
 
 
     const [status, setStatus] = useState("Toute")
 
-  
 
-  
+
+
     return (
 
         <View style={styles.container}>
@@ -301,40 +294,62 @@ const getAllData = () =>{
                     {/* select type */}
 
                     {openData.visible ?
-                        <View style={styles.listeBtn}>
+                        // <View style={styles.listeBtn}>
 
 
-                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                {
-                                    textButtonFiltre.map((e) => {
-                                        return (
+                        //     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        //         {
+                        //             textButtonFiltre.map((e) => {
+                        //                 return (
 
-                                            <TouchableOpacity key={e.id}
-                                                value={e.status}
-                                                onPress={() => {
-                                                    setIsloading(true)
-                                                    setStatus(e.status)
-                                                    handlerFiltre()
-                                                }}
-                                                style={[styles.btnTab, status === e.status && styles.btnActive]}>
-                                                {
+                        //                     <TouchableOpacity key={e.id}
+                        //                         value={e.status}
+                        //                         onPress={() => {
 
-
-
-                                                    <Text style={[styles.tabTextBtn, status === e.status && styles.tabTextBtnActive]}>{e.status}</Text>
+                        //                             setStatus(e.status)
+                        //                             handlerFiltre()
+                        //                         }}
+                        //                         style={[styles.btnTab, status === e.status && styles.btnActive]}>
+                        //                         {
 
 
 
-                                                }
-                                            </TouchableOpacity>
+                        //                             <Text style={[styles.tabTextBtn, status === e.status && styles.tabTextBtnActive]}>{e.status}</Text>
 
-                                        )
-                                    })
 
-                                }
-                            </ScrollView>
 
-                        </View> : null}
+                        //                         }
+                        //                     </TouchableOpacity>
+
+                        //                 )
+                        //             })
+
+                        //         }
+                        //     </ScrollView>
+
+                        // </View>
+                        <View style={{flexDirection:'row', alignItems:'center',alignSelf:'center',backgroundColor:'#000',width:"100%",justifyContent:'space-evenly',padding:10,marginBottom:10}}>
+                            <View style={{backgroundColor:"#000",height:40,alignItems:'center',justifyContent:'center'}}>
+                                <Text style={{color:'#fff',fontSize:20}}>Trié  Par :</Text>
+                            </View>
+                            <SelectDropdown
+                            defaultValue='Tout'
+                                dropdownStyle={{ backgroundColor: "#000", marginVertical: 5 }}
+                                rowStyle={{ backgroundColor: "#087", borderColor: '#087', borderWidth: 1, borderRadius: 10, marginVertical: 0.5, height: 40, }}
+                                rowTextStyle={{ color: "#fff" }}
+                                buttonStyle={{ backgroundColor: "#000", height: 40,  borderColor: '#087', borderWidth: 1, borderRadius: 10 }}
+                                buttonTextStyle={{ marginLeft: 20, color: "#fff" }}
+                                data={textButtonFiltre}
+                                onSelect={(selectedItem, index) => {
+                                    console.log(selectedItem, index)
+                                    setStatus(selectedItem)
+                                    
+                                }}
+
+                            />
+                        </View>
+
+                        : null}
 
 
                     {/* flatList */}
@@ -353,19 +368,19 @@ const getAllData = () =>{
                                             renderItem={({ item, id }) => {
                                                 return (
                                                     <View style={{ marginTop: 15 }} >
-                                                      
-                                                     {status !=='Toute ' && status !=='En préparation'&& status !=='En Cuisine' && status !=='prête'?
-                                                     <>
-                                                     <RedComponente item={item} id={item.id} navigation={navigation} route={route} />
-                                                     <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route}/> 
-                                                     <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} />
-                                                     </>
-                                                     
-                                                    :null
-                                                    }
-                                                       { status =='En préparation' ? <RedComponente item={item} id={item.id} navigation={navigation} route={route} /> : null}
-                                                       { status =='En Cuisine' ? <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route}/>  : null}
-                                                       { status =='prête' ? <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
+
+                                                        {status == 'Tout' && status !== 'En préparation' && status !== 'En Cuisine' && status !== 'prête' ?
+                                                            <>
+                                                                <RedComponente item={item} id={item.id} navigation={navigation} route={route} />
+                                                                <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} />
+                                                                <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} />
+                                                            </>
+
+                                                            : null
+                                                        }
+                                                        {status == 'En préparation' ? <RedComponente item={item} id={item.id} navigation={navigation} route={route} /> : null}
+                                                        {status == 'En Cuisine'? <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
+                                                        {status == 'prête'? <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
                                                     </View>
 
                                                 )
