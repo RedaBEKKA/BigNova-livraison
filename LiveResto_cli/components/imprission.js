@@ -185,7 +185,7 @@ const imprission = ({ navigation: { goBack }, route, navigation }) => {
             let row = rows[i];
             if (row.address) {
                 items.push(
-                    <TouchableOpacity key={new Date().getTime() + i} style={{ backgroundColor: '#f00' }} onPress={() => {
+                    <TouchableOpacity key={new Date().getTime() + i} style={{ backgroundColor: '#087' }} onPress={() => {
                         setLoading(true)
 
 
@@ -234,7 +234,7 @@ const imprission = ({ navigation: { goBack }, route, navigation }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View>
                         <TouchableOpacity onPress={() => { navigation.toggleDrawer() }}>
-                            <Icon name="md-menu-sharp" color={'#087'} size={40} />
+                            <Icon name="md-menu-sharp" color={'#087'} size={35} />
                         </TouchableOpacity>
                     </View>
 
@@ -244,12 +244,11 @@ const imprission = ({ navigation: { goBack }, route, navigation }) => {
                         alignItems: 'center',
 
                         height: height * .085,
-                        width: width * .6,
-
+                        
                     }}>
                         <View style={{}}>
-                            <Text style={{ color: '#000', fontSize: 25, fontWeight: 'bold' }}>Paramètre Imprimante</Text>
-                            <Text style={{ color: '#ccc', fontSize: 15, }}>Choisissez Votre Imprimante !  </Text>
+                            <Text style={{ color: '#000', fontSize: 22, fontWeight: 'bold',marginLeft:10 }}>Paramètre Imprimante</Text>
+                            <Text style={{ color: '#ccc', fontSize: 15,marginLeft:12 }}>Choisissez Votre Imprimante !  </Text>
                         </View>
                     </View>
                 </View>
@@ -332,13 +331,13 @@ const imprission = ({ navigation: { goBack }, route, navigation }) => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 width: '100%',
-                paddingHorizontal: 30,
+                paddingHorizontal: 20,
                 alignSelf: "center",
                 paddingVertical: 20,
                 backgroundColor: '#fff',
             }}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Imprimante connectée:</Text>
-                <Text style={{ color: "blue", fontSize: 18 }}>{!name ? 'No Devices' : name}</Text>
+                <Text style={{ color: "#ccc", fontSize: 18,marginLeft:5 }}>{!name ? "Pas d'appareils" : name}</Text>
 
             </View>
 
@@ -353,22 +352,22 @@ const imprission = ({ navigation: { goBack }, route, navigation }) => {
                 alignItems: 'center',
                 width: '100%',
                 backgroundColor: '#fff',
-                paddingHorizontal: 35,
+                paddingHorizontal: 10,
                 alignSelf: 'center',
-                paddingVertical: 20,
+                paddingVertical: 10,
                 backgroundColor: '#fff'
             }}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', color: "#000" }}>Appareils Disponible :</Text>
-                <Text style={{ fontSize: 15, fontWeight: 'bold', color: "c0c0c0" }}> (appuyez pour vous connecter)</Text>
+                <Text style={{ fontSize: 17, fontWeight: 'bold', color: "#000" }}>Appareils Disponible :</Text>
+                <Text style={{ fontSize: 12, fontWeight: 'bold', color: "#c0c0c0" }}> (appuyez pour vous connecter)</Text>
             </View>
 
             {loading ? (<ActivityIndicator animating={true} />) : null}
             <View style={{ flex: 1, flexDirection: "column", width: "90%", alignSelf: 'center' }}>
-
+<ScrollView>
                 {
                     _renderRow(foundDs)
                 }
-
+</ScrollView>
             </View>
 
 
@@ -383,25 +382,25 @@ const imprission = ({ navigation: { goBack }, route, navigation }) => {
                 alignItems: 'center',
                 width: '100%',
                 backgroundColor: '#fff',
-                paddingHorizontal: 35,
+                paddingHorizontal: 10,
                 alignSelf: 'center',
-                paddingVertical: 20
+                paddingVertical: 10
 
             }}>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: "#000" }}>Appareils Associés :</Text>
-                <Text style={{ fontSize: 15, fontWeight: 'bold', color: "#c0c0c0" }}> (appuyez pour vous reconnecter)</Text>
+                <Text style={{ fontSize: 12, fontWeight: 'bold', color: "#c0c0c0" }}> (appuyez pour vous reconnecter)</Text>
             </View>
 
 
             {loading ? (<ActivityIndicator animating={true} />) : null}
             <View style={{ flex: 1, flexDirection: "column", width: "90%", alignSelf: 'center', marginVertical: 10 }}>
 
-
+<ScrollView>
                 {
                     _renderRow(pairedDs)
                 }
 
-
+</ScrollView>
 
             </View>
 
@@ -422,7 +421,7 @@ const imprission = ({ navigation: { goBack }, route, navigation }) => {
                         alignItems:'center',
                         paddingVertical:14,
                         paddingHorizontal:10,
-                        width:width*.65,
+                        width:width*.85,
                         borderRadius:20,
                         borderWidth:1,
                         borderColor:'#fff',
@@ -432,7 +431,7 @@ const imprission = ({ navigation: { goBack }, route, navigation }) => {
                         shadowOffset: { width: 16, height: 13 },
                     }}>
 
-                    <Text style={{ color: '#fff', fontSize:22,fontWeight:'bold' }}>recherche des imprimante</Text>
+                    <Text style={{ color: '#fff', fontSize:20,fontWeight:'bold' }}>recherche des imprimante</Text>
 
 
                 

@@ -20,7 +20,7 @@ import {
     TextInput,
 
 } from 'react-native';
-
+const axios = require('axios').default;
 
 
 const { width, height } = Dimensions.get('screen')
@@ -60,41 +60,11 @@ const HomeScreen = ({ navigation, route }) => {
     };
 
 
-
-    // useEffect(() => {
-
-    //     const interval = setInterval(() => {
-
-    //         setDataToShow(mergedArray)
-    //     console.log(status)
-
-    //     }, 5000);
-
-    //     return () => {
-    //         clearInterval(interval);
-    //     };
-    // }, [])
-
-
     useEffect(() => {
 
         const interval = setInterval(() => {
 
             GetOthers()
-
-        }, 5000);
-
-        return () => {
-            clearInterval(interval);
-        };
-
-    }, [count])
-
-
-    useEffect(() => {
-
-        const interval = setInterval(() => {
-
             GetToConfirme()
 
         }, 5000);
@@ -104,6 +74,21 @@ const HomeScreen = ({ navigation, route }) => {
         };
 
     }, [count])
+    useEffect(() => {
+
+        // const interval = setInterval(() => {
+
+           //setMergedArray([...confirm,...others])
+            console.log('.........................',mergedArray)
+        // }, 5000);
+
+        // return () => {
+        //     clearInterval(interval);
+        // };
+
+    }, [count])
+
+ 
 
 
     // Methodes
@@ -161,10 +146,15 @@ const HomeScreen = ({ navigation, route }) => {
                 setCount(count + 1)
             })
     }
-    const borderColor = isEnabled ? '#087' : '#700'
-    const background = isEnabled ? '#000' : '#ccc'
-    const mergedArray = [...confirm, ...others]
-    const [selectedValue, setSelectedValue] = useState("Toute");
+
+const getAllData = () =>{
+    Promise.all([
+        axios.get("https://dev500.live-resto.fr/apiv2e/orders"),
+        axios.get("https://dev500.live-resto.fr/apiv2e/orders"),
+      ])
+}
+
+
 
     const textButtonFiltre = [
         {
@@ -190,33 +180,48 @@ const HomeScreen = ({ navigation, route }) => {
     ]
 
 
-    const [dataToshow, setDataToShow] = useState(mergedArray)
+    //const [dataToshow, setDataToShow] = useState(mergedArray)
     const [isLoading, setIsloading] = useState(false)
+    const borderColor = isEnabled ? '#087' : '#700'
+    const background = isEnabled ? '#000' : '#ccc'
+    // const mergedArray = []
 
+
+    //const [mergedArray,setMergedArray] = useState([...confirm,...others])
+ 
+   const mergedArray = [...confirm,...others]
 
     const handlerFiltre = async (f) => {
         // let word = f.target.value
         console.log('handlerFiltre|||||||||||||||||||||||||||||', status)
         if (status == 'En préparation') {
             const data = mergedArray.filter(item => item.kitchenstate_id == '20')
-            setDataToShow(data)
+
+            //setMergedArray(data)
+            console.log('data 20',data)
+
+
+
 
         } else if (status == 'En Cuisine') {
             const data = mergedArray.filter(item => item.kitchenstate_id == '30')
 
-            setDataToShow(data)
+           // setMergedArray(data)
+            console.log('data 30',data)
 
 
         } else if (status == 'prête') {
             const data = mergedArray.filter(item => item.kitchenstate_id == '40')
-            setDataToShow(data)
-
-
+            //setMergedArray(data)
+            console.log('data 40',data)
 
         }
 
         if (status == 'Toute') {
-            setDataToShow(mergedArray)
+            
+            //setMergedArray(mergedArray)
+
+
 
         }
     }
@@ -225,15 +230,9 @@ const HomeScreen = ({ navigation, route }) => {
 
     const [status, setStatus] = useState("Toute")
 
-    // const setStatusByFilter = status => {
-    //     setStatus(status)
-    // }
+  
 
-    const loadinbtn = () => {
-        setTimeout(async () => {
-            await setIsloading(true)
-        }, 1000)
-    }
+  
     return (
 
         <View style={styles.container}>
@@ -348,15 +347,25 @@ const HomeScreen = ({ navigation, route }) => {
                                         <FlatList
                                             showsVerticalScrollIndicator={true}
                                             indicatorStyle='black'
-                                            style={{ backgroundColor: '#000', height: height * .73, alignSelf: 'center', width: width * .95, }}
-                                            data={dataToshow}
+                                            style={{ backgroundColor: '#000', height: height * .67, alignSelf: 'center', width: width * .95, }}
+                                            data={mergedArray}
                                             keyExtractor={item => item.id}
                                             renderItem={({ item, id }) => {
                                                 return (
                                                     <View style={{ marginTop: 15 }} >
-                                                        <RedComponente item={item} id={item.id} navigation={navigation} route={route} />
-                                                        <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} />
-                                                        <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} />
+                                                      
+                                                     {status !=='Toute ' && status !=='En préparation'&& status !=='En Cuisine' && status !=='prête'?
+                                                     <>
+                                                     <RedComponente item={item} id={item.id} navigation={navigation} route={route} />
+                                                     <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route}/> 
+                                                     <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} />
+                                                     </>
+                                                     
+                                                    :null
+                                                    }
+                                                       { status =='En préparation' ? <RedComponente item={item} id={item.id} navigation={navigation} route={route} /> : null}
+                                                       { status =='En Cuisine' ? <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route}/>  : null}
+                                                       { status =='prête' ? <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
                                                     </View>
 
                                                 )
@@ -399,7 +408,7 @@ const HomeScreen = ({ navigation, route }) => {
                         </View>
                         <TouchableOpacity style={[styles.buttonContainer, { marginVertical: 10, borderRadius: 25 }]}
                             onPress={() => {
-                                setDataToShow(mergedArray)
+                                //setDataToShow(mergedArray)
 
                                 toggleOpen()
                                 console.log(mergedArray)
