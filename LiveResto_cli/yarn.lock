@@ -7389,6 +7389,13 @@
     "prop-types" "^15.5.8"
     "tween-functions" "^1.0.1"
 
+"react-native-dropdown-picker@^5.1.23":
+  "integrity" "sha512-Mz8CJAP/3iSXqR7Ox0IchfSotP1g2tcxn3jIS23IEw73zAdntLsp3J15iQQrIANxEuxel2RcPIF2sZvcyKQK9g=="
+  "resolved" "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-5.1.23.tgz"
+  "version" "5.1.23"
+  dependencies:
+    "react-native-gesture-handler" "*"
+
 "react-native-easy-grid@0.2.2":
   "integrity" "sha512-MlYrNIldnEMKn6TVatQN1P64GoVlwGIuz+8ncdfJ0Wq/xtzUkQwlil8Uksyp7MhKfENE09MQnGNcba6Mx3oSAA=="
   "resolved" "https://registry.npmjs.org/react-native-easy-grid/-/react-native-easy-grid-0.2.2.tgz"

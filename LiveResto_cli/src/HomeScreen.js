@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 //import Icon from 'react-native-vector-icons/FontAwesome';
 import ModelContainer from './../components/ModelContainer';
 import { AuthContext, DataContext, ShowDataOpen } from './../components/context'
@@ -10,6 +10,7 @@ import OrangeComponente from './../components/orangeComponente'
 import GreenComponente from './../components/greenComponent'
 import { styles } from './HomeScreen/styleHome'
 import SelectDropdown from 'react-native-select-dropdown'
+
 import {
     View,
     Text,
@@ -75,19 +76,19 @@ const HomeScreen = ({ navigation, route }) => {
         };
 
     }, [count])
-    useEffect(() => {
+    // useEffect(() => {
 
-        // const interval = setInterval(() => {
+    //     // const interval = setInterval(() => {
 
-        //setMergedArray([...confirm,...others])
-        console.log('.........................', mergedArray)
-        // }, 5000);
+    //     //setMergedArray([...confirm,...others])
+    //     console.log('.........................', mergedArray)
+    //     // }, 5000);
 
-        // return () => {
-        //     clearInterval(interval);
-        // };
+    //     // return () => {
+    //     //     clearInterval(interval);
+    //     // };
 
-    }, [count])
+    // }, [count])
 
 
 
@@ -148,20 +149,13 @@ const HomeScreen = ({ navigation, route }) => {
             })
     }
 
-    const getAllData = () => {
-        Promise.all([
-            axios.get("https://dev500.live-resto.fr/apiv2e/orders"),
-            axios.get("https://dev500.live-resto.fr/apiv2e/orders"),
-        ])
-    }
+
 
 
 
     const textButtonFiltre = [
 
         'Tout'
-
-
         ,
         'En préparation'
         ,
@@ -236,9 +230,9 @@ const HomeScreen = ({ navigation, route }) => {
 
                     <View style={styles.HeaderContainer}>
 
-                        <View style={{ backgroundColor: '#f4f4f4', borderColor: '#000', borderWidth: .8, borderRadius: 5 }}>
+                        <View style={{ backgroundColor: '#f4f4f4', borderColor: '#087', borderWidth: .8, borderRadius: 5 }}>
                             {/* <Icon.Button name="menu" color="#087" size={30}  onPress={() => navigation.toggleDrawer()}></Icon.Button> */}
-                            <Icon name="menu-outline" color={'#000'} size={35} style={{ paddingHorizontal: 5, paddingVertical: 2 }} onPress={() => navigation.toggleDrawer()} />
+                            <Icon name="menu" color={'#087'} size={35} style={{ paddingHorizontal: 5, paddingVertical: 2 }} onPress={() => navigation.toggleDrawer()} />
 
                         </View>
 
@@ -248,7 +242,7 @@ const HomeScreen = ({ navigation, route }) => {
                                 RefreshCommande()
                                 setCount(count + 1)
                             }}>
-                                <Icon name="restaurant-outline" color={'#000'} size={25} style={{ marginHorizontal: 15 }} />
+                                <Icon name="chef-hat" color={'#087'} size={25} style={{ marginHorizontal: 15 }} />
 
                             </TouchableOpacity>
                         </View>
@@ -295,58 +289,56 @@ const HomeScreen = ({ navigation, route }) => {
 
                     {openData.visible ?
                         // <View style={styles.listeBtn}>
-
-
                         //     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                         //         {
                         //             textButtonFiltre.map((e) => {
                         //                 return (
-
                         //                     <TouchableOpacity key={e.id}
                         //                         value={e.status}
                         //                         onPress={() => {
-
                         //                             setStatus(e.status)
                         //                             handlerFiltre()
                         //                         }}
                         //                         style={[styles.btnTab, status === e.status && styles.btnActive]}>
                         //                         {
-
-
-
                         //                             <Text style={[styles.tabTextBtn, status === e.status && styles.tabTextBtnActive]}>{e.status}</Text>
-
-
-
                         //                         }
                         //                     </TouchableOpacity>
-
                         //                 )
                         //             })
-
                         //         }
                         //     </ScrollView>
 
                         // </View>
-                        <View style={{flexDirection:'row', alignItems:'center',alignSelf:'center',backgroundColor:'#000',width:"100%",justifyContent:'space-evenly',padding:10,marginBottom:10}}>
-                            <View style={{backgroundColor:"#000",height:40,alignItems:'center',justifyContent:'center'}}>
-                                <Text style={{color:'#fff',fontSize:20}}>Trié  Par :</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', backgroundColor: '#000', width: "100%", justifyContent: 'space-evenly', padding: 10, marginBottom: 10 }}>
+                            <View style={{ backgroundColor: "#000", height: 40, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: '#fff', fontSize: 20 }}>Trié  Par :</Text>
                             </View>
                             <SelectDropdown
-                            defaultValue='Tout'
-                                dropdownStyle={{ backgroundColor: "#000", marginVertical: 5 }}
-                                rowStyle={{ backgroundColor: "#087", borderColor: '#087', borderWidth: 1, borderRadius: 10, marginVertical: 0.5, height: 40, }}
-                                rowTextStyle={{ color: "#fff" }}
-                                buttonStyle={{ backgroundColor: "#000", height: 40,  borderColor: '#087', borderWidth: 1, borderRadius: 10 }}
-                                buttonTextStyle={{ marginLeft: 20, color: "#fff" }}
-                                data={textButtonFiltre}
+                                label='Favorite Fruit'
+                                 defaultValue='Tout'
+                                 dropdownStyle={{ backgroundColor: "#000", marginVertical: 5 }}
+                                 rowStyle={{ backgroundColor: "#fff", borderColor: '#087', borderWidth: 1, borderRadius: 10, marginVertical: 0.5, height: 35, }}
+                                 rowTextStyle={{ color: "#078" }}
+                                 buttonStyle={{ backgroundColor: "#000", height: 35, borderColor: '#087', borderBottomWidth: 1, borderRadius: 10 }}
+                                 buttonTextStyle={{ color: "#fff" }}
+                                 data={textButtonFiltre}
+                                dropDownStyle={{backgroundColor: '#000'}}
                                 onSelect={(selectedItem, index) => {
                                     console.log(selectedItem, index)
                                     setStatus(selectedItem)
-                                    
-                                }}
 
-                            />
+                                }}
+                                onChangeItem={
+                                    item => this.setState({
+                                    country: item.value
+                                })
+                               
+                            }
+                            /> 
+                            <View style={{position:'absolute',right:50,backgroundColor:"#000",borderRadius:3,width:25,alignItems:"center"}} >
+                                <Icon name="arrow-down-drop-circle" color={'#087'} size={17} style={{  }} />
+                            </View>
                         </View>
 
                         : null}
@@ -379,8 +371,8 @@ const HomeScreen = ({ navigation, route }) => {
                                                             : null
                                                         }
                                                         {status == 'En préparation' ? <RedComponente item={item} id={item.id} navigation={navigation} route={route} /> : null}
-                                                        {status == 'En Cuisine'? <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
-                                                        {status == 'prête'? <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
+                                                        {status == 'En Cuisine' ? <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
+                                                        {status == 'prête' ? <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
                                                     </View>
 
                                                 )
