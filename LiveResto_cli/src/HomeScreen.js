@@ -20,6 +20,7 @@ import {
     Image,
     Dimensions, ActivityIndicator,
     TextInput,
+    Vibration
 
 } from 'react-native';
 const axios = require('axios').default;
@@ -76,23 +77,7 @@ const HomeScreen = ({ navigation, route }) => {
         };
 
     }, [count])
-    // useEffect(() => {
-
-    //     // const interval = setInterval(() => {
-
-    //     //setMergedArray([...confirm,...others])
-    //     console.log('.........................', mergedArray)
-    //     // }, 5000);
-
-    //     // return () => {
-    //     //     clearInterval(interval);
-    //     // };
-
-    // }, [count])
-
-
-
-
+   
     // Methodes
 
 
@@ -149,9 +134,29 @@ const HomeScreen = ({ navigation, route }) => {
             })
     }
 
+    const [newCount, setNewCount] = useState(0)
+
+    const DURATION = 1000
+
+    const starVib = () => {
+        Vibration.vibrate(DURATION)
+    }
+    const stopVib = () => {
+        Vibration.cancel()
+    }
 
 
+    useEffect(() => {
+        if (toConfirmeCount == 0 && newCount == toConfirmeCount) {
+            stopVib()
+        } else if (toConfirmeCount >= 1 && newCount == toConfirmeCount -1) {
+            starVib()
+            setNewCount(toConfirmeCount)
 
+        }
+        console.log('vnewCountnewCountnewCountnewCountnewCountnewCount',newCount)
+
+    }, [toConfirmeCount])
 
     const textButtonFiltre = [
 
@@ -160,61 +165,15 @@ const HomeScreen = ({ navigation, route }) => {
         'En préparation'
         ,
         'En Cuisine'
-
         ,
         'prête'
-
     ]
 
 
-    //const [dataToshow, setDataToShow] = useState(mergedArray)
     const [isLoading, setIsloading] = useState(false)
     const borderColor = isEnabled ? '#087' : '#700'
     const background = isEnabled ? '#000' : '#ccc'
-    // const mergedArray = []
-
-
-    //const [mergedArray,setMergedArray] = useState([...confirm,...others])
-
     const mergedArray = [...confirm, ...others]
-
-    // const handlerFiltre = async (f) => {
-    //     // let word = f.target.value
-    //     console.log('handlerFiltre|||||||||||||||||||||||||||||', status)
-    //     if (status == 'En préparation') {
-    //         const data = mergedArray.filter(item => item.kitchenstate_id == '20')
-
-    //         //setMergedArray(data)
-    //         console.log('data 20', data)
-
-
-
-
-    //     } else if (status == 'En Cuisine') {
-    //         const data = mergedArray.filter(item => item.kitchenstate_id == '30')
-
-    //         // setMergedArray(data)
-    //         console.log('data 30', data)
-
-
-    //     } else if (status == 'prête') {
-    //         const data = mergedArray.filter(item => item.kitchenstate_id == '40')
-    //         //setMergedArray(data)
-    //         console.log('data 40', data)
-
-    //     }
-
-    //     if (status == 'Tout') {
-
-    //         //setMergedArray(mergedArray)
-
-
-
-    //     }
-    // }
-
-
-
     const [status, setStatus] = useState("Toute")
 
 
@@ -288,42 +247,21 @@ const HomeScreen = ({ navigation, route }) => {
                     {/* select type */}
 
                     {openData.visible ?
-                        // <View style={styles.listeBtn}>
-                        //     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        //         {
-                        //             textButtonFiltre.map((e) => {
-                        //                 return (
-                        //                     <TouchableOpacity key={e.id}
-                        //                         value={e.status}
-                        //                         onPress={() => {
-                        //                             setStatus(e.status)
-                        //                             handlerFiltre()
-                        //                         }}
-                        //                         style={[styles.btnTab, status === e.status && styles.btnActive]}>
-                        //                         {
-                        //                             <Text style={[styles.tabTextBtn, status === e.status && styles.tabTextBtnActive]}>{e.status}</Text>
-                        //                         }
-                        //                     </TouchableOpacity>
-                        //                 )
-                        //             })
-                        //         }
-                        //     </ScrollView>
-
-                        // </View>
+                    
                         <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', backgroundColor: '#000', width: "100%", justifyContent: 'space-evenly', padding: 10, marginBottom: 10 }}>
                             <View style={{ backgroundColor: "#000", height: 40, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: '#fff', fontSize: 20 }}>Trié  Par :</Text>
                             </View>
                             <SelectDropdown
                                 label='Favorite Fruit'
-                                 defaultValue='Tout'
-                                 dropdownStyle={{ backgroundColor: "#000", marginVertical: 5 }}
-                                 rowStyle={{ backgroundColor: "#fff", borderColor: '#087', borderWidth: 1, borderRadius: 10, marginVertical: 0.5, height: 35, }}
-                                 rowTextStyle={{ color: "#078" }}
-                                 buttonStyle={{ backgroundColor: "#000", height: 35, borderColor: '#087', borderBottomWidth: 1, borderRadius: 10 }}
-                                 buttonTextStyle={{ color: "#fff" }}
-                                 data={textButtonFiltre}
-                                dropDownStyle={{backgroundColor: '#000'}}
+                                defaultValue='Tout'
+                                dropdownStyle={{ backgroundColor: "#000", marginVertical: 5 }}
+                                rowStyle={{ backgroundColor: "#fff", borderColor: '#087', borderWidth: 1, borderRadius: 10, marginVertical: 0.5, height: 35, }}
+                                rowTextStyle={{ color: "#078" }}
+                                buttonStyle={{ backgroundColor: "#000", height: 35, borderColor: '#087', borderBottomWidth: 1, borderRadius: 10 }}
+                                buttonTextStyle={{ color: "#fff" }}
+                                data={textButtonFiltre}
+                                dropDownStyle={{ backgroundColor: '#000' }}
                                 onSelect={(selectedItem, index) => {
                                     console.log(selectedItem, index)
                                     setStatus(selectedItem)
@@ -331,13 +269,13 @@ const HomeScreen = ({ navigation, route }) => {
                                 }}
                                 onChangeItem={
                                     item => this.setState({
-                                    country: item.value
-                                })
-                               
-                            }
-                            /> 
-                            <View style={{position:'absolute',right:50,backgroundColor:"#000",borderRadius:3,width:25,alignItems:"center"}} >
-                                <Icon name="arrow-down-drop-circle" color={'#087'} size={17} style={{  }} />
+                                        country: item.value
+                                    })
+
+                                }
+                            />
+                            <View style={{ position: 'absolute', right: 50, backgroundColor: "#000", borderRadius: 3, width: 25, alignItems: "center" }} >
+                                <Icon name="arrow-down-drop-circle" color={'#087'} size={17} style={{}} />
                             </View>
                         </View>
 
@@ -363,14 +301,14 @@ const HomeScreen = ({ navigation, route }) => {
 
                                                         {status == 'Tout' && status !== 'En préparation' && status !== 'En Cuisine' && status !== 'prête' ?
                                                             <>
-                                                                <RedComponente item={item} id={item.id} navigation={navigation} route={route} />
+                                                                <RedComponente item={item} id={item.id} navigation={navigation} route={route} setNewCount={setNewCount} newCount={newCount} />
                                                                 <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} />
                                                                 <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} />
                                                             </>
 
                                                             : null
                                                         }
-                                                        {status == 'En préparation' ? <RedComponente item={item} id={item.id} navigation={navigation} route={route} /> : null}
+                                                        {status == 'En préparation' ? <RedComponente item={item} id={item.id} navigation={navigation} route={route} setNewCount={setNewCount} newCount={newCount}/> : null}
                                                         {status == 'En Cuisine' ? <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
                                                         {status == 'prête' ? <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
                                                     </View>
@@ -393,7 +331,7 @@ const HomeScreen = ({ navigation, route }) => {
 
                     <View style={styles.containerTowT}>
                         <View style={styles.containerV}>
-                            <Icon name="md-warning" color={'#087'} size={32} style={{ marginVertical: 10 }} />
+                            <Icon name="order-bool-descending-variant" color={'#087'} size={32} style={{ marginVertical: 10 }} />
                             <Text style={{ color: '#fff', fontSize: 17, fontWeight: 'bold' }}> Aucune Commande </Text>
                         </View>
 
@@ -407,7 +345,7 @@ const HomeScreen = ({ navigation, route }) => {
                 {openData.btn ? (
                     <View style={styles.containerMsg}>
                         <View style={[styles.containerM, { marginHorizontal: 5 }]} >
-                            <Icon name="md-information-circle" color={'#087'} size={45} style={{ marginTop: 8, marginLeft: -25 }} />
+                            <Icon name="book-information-variant" color={'#087'} size={45} style={{ marginTop: 8, marginLeft: -25 }} />
                             <View>
                                 <Text style={[{ fontWeight: 'bold', color: "#fff", fontSize: 20 }]}>{openData.msg}</Text>
                                 <Text style={[{ fontSize: 17, marginVertical: 3, color: '#ccc' }]}>{openData.heur} </Text>
@@ -441,7 +379,7 @@ const HomeScreen = ({ navigation, route }) => {
                 <View style={{ alignItems: 'flex-end' }}>
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => toggleOpenAlertOpen()}>
-                            <Icon name="md-close-circle" color={'#078'} size={40} />
+                            <Icon name="close-circle" color={'#078'} size={40} />
 
                         </TouchableOpacity>
                     </View>
@@ -465,7 +403,7 @@ const HomeScreen = ({ navigation, route }) => {
                 <View style={{ alignItems: 'flex-end' }}>
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => toggleOffAlert(false)}>
-                            <Icon name="md-close-circle" color={'#078'} size={40} />
+                            <Icon name="close-circle" color={'#078'} size={40} />
 
                         </TouchableOpacity>
                     </View>
@@ -489,7 +427,7 @@ const HomeScreen = ({ navigation, route }) => {
                 <View style={{ justifyContent: 'space-between', marginVertical: 20 }}>
                     <View style={{ backgroundColor: '#fff', flexDirection: 'row-reverse', width: '100%', justifyContent: 'space-between', paddingHorizontal: 3, alignItems: 'center' }}>
                         <TouchableOpacity onPress={() => setVisibleAll(false)}>
-                            <Icon name="md-close-circle" color={'#078'} size={35} />
+                            <Icon name="close-circle" color={'#078'} size={35} />
                         </TouchableOpacity>
 
                         <Text style={[{ fontSize: 25, fontWeight: 'bold', color: '#000' }]}>
@@ -598,7 +536,7 @@ const HomeScreen = ({ navigation, route }) => {
                     <View style={{}}>
                         <View style={styles.header}>
                             <TouchableOpacity onPress={() => setVisible(false)}>
-                                <Icon name="md-close-circle" color={'#078'} size={30} style={{ marginTop: 0 }} />
+                                <Icon name="close-circle" color={'#078'} size={30} style={{ marginTop: 0 }} />
                             </TouchableOpacity>
                         </View>
                     </View>

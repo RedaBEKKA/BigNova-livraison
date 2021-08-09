@@ -14,7 +14,7 @@ import {
 
 } from 'react-native';
 
-const RedComponente = ({ item, id, navigation, route, }) => {
+const RedComponente = ({ item, id, navigation, route,setNewCount,newCount }) => {
     const [result, setResult] = React.useState('')
     const donne = useContext(DataContext)
     const token = donne.establishment.token
@@ -186,7 +186,7 @@ const RedComponente = ({ item, id, navigation, route, }) => {
                                     //setCount(count + 1)
                                     //console.log(count)
                                     ToCuisine(id) //send to cuisine 30 kitchen state id = 40||30
-
+                                    setNewCount(newCount -1)
                                     {
 
                                         console.log('idd from function', id, item.kitchenstate_id)
