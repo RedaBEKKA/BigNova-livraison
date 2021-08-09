@@ -10,7 +10,8 @@ import OrangeComponente from './../components/orangeComponente'
 import GreenComponente from './../components/greenComponent'
 import { styles } from './HomeScreen/styleHome'
 import SelectDropdown from 'react-native-select-dropdown'
-
+import Sound from 'react-native-sound';
+import SoundPlayer from 'react-native-sound-player'
 import {
     View,
     Text,
@@ -77,7 +78,7 @@ const HomeScreen = ({ navigation, route }) => {
         };
 
     }, [count])
-   
+
     // Methodes
 
 
@@ -144,17 +145,49 @@ const HomeScreen = ({ navigation, route }) => {
     const stopVib = () => {
         Vibration.cancel()
     }
+  
+
+    
+  
+
+
+
+
+
+    const PlayLocalSoundFile = () => {
+        Sound.setCategory('Playback');
+    }
+
+
+
 
 
     useEffect(() => {
         if (toConfirmeCount == 0 && newCount == toConfirmeCount) {
             stopVib()
-        } else if (toConfirmeCount >= 1 && newCount == toConfirmeCount -1) {
+        } else if (toConfirmeCount >= 1 && newCount == toConfirmeCount - 1) {
             starVib()
+            var mySound = new Sound('son.mp3', Sound.MAIN_BUNDLE, (error) => {
+                if (error) {
+                    console.log('Error loading sound: ' + error);
+                    return;
+                } else {
+                    mySound.play((success) => {
+                        if (success) {
+                            console.log('Sound playing')
+                        } else {
+                            console.log('Issue playing file');
+                        }
+                    })
+                }
+            });
+            mySound.release();
+            mySound.setVolume(0.3);
             setNewCount(toConfirmeCount)
+            
 
         }
-        console.log('vnewCountnewCountnewCountnewCountnewCountnewCount',newCount)
+        console.log('vnewCountnewCountnewCountnewCountnewCountnewCount', newCount)
 
     }, [toConfirmeCount])
 
@@ -168,7 +201,6 @@ const HomeScreen = ({ navigation, route }) => {
         ,
         'prête'
     ]
-
 
     const [isLoading, setIsloading] = useState(false)
     const borderColor = isEnabled ? '#087' : '#700'
@@ -247,7 +279,7 @@ const HomeScreen = ({ navigation, route }) => {
                     {/* select type */}
 
                     {openData.visible ?
-                    
+
                         <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center', backgroundColor: '#000', width: "100%", justifyContent: 'space-evenly', padding: 10, marginBottom: 10 }}>
                             <View style={{ backgroundColor: "#000", height: 40, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: '#fff', fontSize: 20 }}>Trié  Par :</Text>
@@ -308,7 +340,7 @@ const HomeScreen = ({ navigation, route }) => {
 
                                                             : null
                                                         }
-                                                        {status == 'En préparation' ? <RedComponente item={item} id={item.id} navigation={navigation} route={route} setNewCount={setNewCount} newCount={newCount}/> : null}
+                                                        {status == 'En préparation' ? <RedComponente item={item} id={item.id} navigation={navigation} route={route} setNewCount={setNewCount} newCount={newCount} /> : null}
                                                         {status == 'En Cuisine' ? <OrangeComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
                                                         {status == 'prête' ? <GreenComponente item={item} id={item.id} kitchenstateid={item.kitchenstate_id} navigation={navigation} route={route} /> : null}
                                                     </View>

@@ -48,6 +48,8 @@
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^1.0.0-alpha.23",
     "react-native-select-dropdown": "^1.0.9",
+    "react-native-sound": "^0.11.0",
+    "react-native-sound-player": "^0.11.0",
     "react-native-swiper": "^1.6.0",
     "react-native-table-component": "^1.2.1",
     "react-native-unimodules": "^0.13.3",
