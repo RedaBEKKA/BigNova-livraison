@@ -145,28 +145,23 @@ const HomeScreen = ({ navigation, route }) => {
     const stopVib = () => {
         Vibration.cancel()
     }
-  
-
-    
-  
 
 
-
-
-
-    const PlayLocalSoundFile = () => {
-        Sound.setCategory('Playback');
-    }
-
-
+    // const PlayLocalSoundFile = () => {
+    //     Sound.setCategory('Playback');
+    // }
 
 
 
     useEffect(() => {
         if (toConfirmeCount == 0 && newCount == toConfirmeCount) {
             stopVib()
+            console.log('stop')
         } else if (toConfirmeCount >= 1 && newCount == toConfirmeCount - 1) {
             starVib()
+            setNewCount(toConfirmeCount)
+            console.log('star')
+
             var mySound = new Sound('son.mp3', Sound.MAIN_BUNDLE, (error) => {
                 if (error) {
                     console.log('Error loading sound: ' + error);
@@ -183,9 +178,8 @@ const HomeScreen = ({ navigation, route }) => {
             });
             mySound.release();
             mySound.setVolume(0.3);
-            setNewCount(toConfirmeCount)
             
-
+            
         }
         console.log('vnewCountnewCountnewCountnewCountnewCountnewCount', newCount)
 
